@@ -375,13 +375,13 @@ void MainWindow::refresh() {
     if (bresenhamCircleButton -> isChecked()) {
         std::cout << "YA DOLZHEN RISOVAT KRUG BLYAT" << std::endl;
         image.currentLine = BRESENHAMCIRCLE;
-        refreshImageCircle();
+        refreshImageCircle(); // ты блять
     }
 
     if (bresenhamLineButton -> isChecked()) {
         std::cout << "YA DOLZHEN RISOVAT LINIU" << std::endl;
         image.currentLine = BRESENHAMLINE;
-        refreshImageCircle();
+        refreshImageCircle(); // издеваешься
     }
     repaint();
 
