@@ -40,17 +40,26 @@ private:
     Image image;
 
     QRadioButton* bresenhamCircleButton;
-
     QSpinBox *radiusSpinBox;
-    QSpinBox *xSpinBox;
-    QSpinBox *ySpinBox;
+    QSpinBox *xCenterOfCircleSpinBox;
+    QSpinBox *yCenterOfCircleSpinBox;
+
+
+    QRadioButton* bresenhamLineButton;
+
+    QSpinBox *xOfFirstPointSpinBox;
+    QSpinBox *yOfFirstPointSpinBox;
+
+    QSpinBox *xOfSecondPointSpinBox;
+    QSpinBox *yOfSecondPointSpinBox;
 
 protected:
     void paintEvent(QPaintEvent*) override;
 
 private slots:
 
-    void refreshImage();
+    void refreshImageCircle();
+    void refreshImageLine();
 
 
 private:

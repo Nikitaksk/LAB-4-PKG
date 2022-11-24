@@ -28,58 +28,55 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 //    label1->setFrameStyle(QFrame::Box | QFrame::Plain);
 //    label1->setLineWidth(5);
 
-
-
     QHBoxLayout *paintingAreaLayout = new QHBoxLayout();
     QVBoxLayout *infoAreaLayout = new QVBoxLayout();
+
     QVBoxLayout *bresenhamCircleButtonLayout = new QVBoxLayout();
     QHBoxLayout *bresenhamEntryCenterLayout = new QHBoxLayout();
 
+    QVBoxLayout *bresenhamLineLayout = new QVBoxLayout();
+    QHBoxLayout* firstPointBresenhamLineLayout = new QHBoxLayout;
+    QHBoxLayout* secondPointBresenhamLineLayout = new QHBoxLayout;
+
     infoAreaLayout->addLayout(bresenhamCircleButtonLayout);
+    infoAreaLayout->addLayout(bresenhamLineLayout);
+
 
     bresenhamEntryCenterLayout->setSpacing(1);
     bresenhamCircleButton = new QRadioButton(QString("Bresenham (Circle)"), this);
-    connect(bresenhamCircleButton, SIGNAL(toggled(bool)), this, SLOT(refreshImage()));
+    connect(bresenhamCircleButton, SIGNAL(toggled(bool)), this, SLOT(refreshImageCircle()));
 
     QLabel * centerOfCircleLabel = new QLabel(this);
     centerOfCircleLabel->setText("Center:");
-//    centerOfCircleLabel->setFrameStyle(QFrame::Box | QFrame::Plain);
-//    centerOfCircleLabel->setLineWidth(5);
     centerOfCircleLabel->setFixedWidth(70);
 
     QLabel * xCenterLabel = new QLabel(this);
     xCenterLabel->setText("X:");
-//    xCenterLabel->setFrameStyle(QFrame::Box | QFrame::Plain);
-//    xCenterLabel->setLineWidth(5);
     xCenterLabel->setFixedWidth(20);
 
     QLabel * emptyCenterLabel = new QLabel(this);
     emptyCenterLabel->setText("    ");
-//    emptyCenterLabel->setFrameStyle(QFrame::Box | QFrame::Plain);
-//    emptyCenterLabel->setLineWidth(5);
     emptyCenterLabel->setFixedWidth(20);
 
     QLabel * yCenterLabel = new QLabel(this);
-    yCenterLabel->setText("Y:");
-//    yCenterLabel->setFrameStyle(QFrame::Box | QFrame::Plain);
-//    yCenterLabel->setLineWidth(5);
+    yCenterLabel->setText("   Y:");
     yCenterLabel->setFixedWidth(20);
 
-    xSpinBox  = new QSpinBox(this);
-    xSpinBox->setMaximum(17);
-    xSpinBox->setMinimum(-15);
-    xSpinBox->setFixedWidth(86);
-    xSpinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
-    xSpinBox->setFixedHeight(25);
-    xSpinBox->setFixedWidth(70);
+    xCenterOfCircleSpinBox  = new QSpinBox(this);
+    xCenterOfCircleSpinBox->setMaximum(17);
+    xCenterOfCircleSpinBox->setMinimum(-15);
+    xCenterOfCircleSpinBox->setFixedWidth(86);
+    xCenterOfCircleSpinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
+    xCenterOfCircleSpinBox->setFixedHeight(25);
+    xCenterOfCircleSpinBox->setFixedWidth(70);
 
-    ySpinBox  = new QSpinBox(this);
-    ySpinBox->setMaximum(17);
-    ySpinBox->setMinimum(-15);
-    ySpinBox->setFixedWidth(86);
-    ySpinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
-    ySpinBox->setFixedHeight(25);
-    ySpinBox->setFixedWidth(70);
+    yCenterOfCircleSpinBox  = new QSpinBox(this);
+    yCenterOfCircleSpinBox->setMaximum(17);
+    yCenterOfCircleSpinBox->setMinimum(-15);
+    yCenterOfCircleSpinBox->setFixedWidth(86);
+    yCenterOfCircleSpinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
+    yCenterOfCircleSpinBox->setFixedHeight(25);
+    yCenterOfCircleSpinBox->setFixedWidth(70);
 
     QLabel * radiusCircleLabel = new QLabel(this);
     radiusCircleLabel->setText("Radius:");
@@ -93,28 +90,144 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     radiusSpinBox->setFixedWidth(80);
     radiusSpinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
 
-    QPushButton* refreshPushButton = new QPushButton(QString("Refresh"), this);
-    refreshPushButton->setFixedHeight(60);
-    refreshPushButton->setFixedWidth(240);
-    connect(refreshPushButton, SIGNAL(clicked()), this, SLOT(refreshImage()));
-
     bresenhamCircleButtonLayout->setSpacing(10);
     bresenhamCircleButtonLayout->addWidget(bresenhamCircleButton, 1, Qt::AlignTop);
     bresenhamCircleButtonLayout->addWidget(centerOfCircleLabel, 1, Qt::AlignTop);
     bresenhamCircleButtonLayout->addLayout(bresenhamEntryCenterLayout);
     bresenhamEntryCenterLayout->addWidget(xCenterLabel, 0, Qt::AlignLeft);
-    bresenhamEntryCenterLayout->addWidget(xSpinBox, 0, Qt::AlignLeft);
+    bresenhamEntryCenterLayout->addWidget(xCenterOfCircleSpinBox, 0, Qt::AlignLeft);
     bresenhamEntryCenterLayout->addWidget(yCenterLabel, 0, Qt::AlignLeft);
-    bresenhamEntryCenterLayout->addWidget(ySpinBox, 0, Qt::AlignLeft);
+    bresenhamEntryCenterLayout->addWidget(yCenterOfCircleSpinBox, 0, Qt::AlignLeft);
     bresenhamEntryCenterLayout->addWidget(emptyCenterLabel, 1, Qt::AlignLeft);
     bresenhamCircleButtonLayout->addWidget(radiusCircleLabel, 1, Qt::AlignLeft);
     bresenhamCircleButtonLayout->addWidget(radiusSpinBox, 1, Qt::AlignLeft);
+
+
+    bresenhamLineButton = new QRadioButton(QString("Bresenham (Line)"), this);
+    connect(bresenhamCircleButton, SIGNAL(toggled(bool)), this, SLOT(refreshImageLine()));
+
+    QLabel * xOfFirstPointLabel = new QLabel(this);
+    xOfFirstPointLabel->setText("X1:");
+//    xOfFirstPointLabel->setFrameStyle(QFrame::Box | QFrame::Plain);
+//    xOfFirstPointLabel->setLineWidth(5);
+    xOfFirstPointLabel->setFixedWidth(25);
+    xOfFirstPointLabel->setFixedHeight(25);
+
+    QLabel * yOfFirstPointLabel = new QLabel(this);
+    yOfFirstPointLabel->setText("   Y1 : ");
+//    yOfFirstPointLabel->setFrameStyle(QFrame::Box | QFrame::Plain);
+//    yOfFirstPointLabel->setLineWidth(5);
+    yOfFirstPointLabel->setFixedWidth(25);
+    yOfFirstPointLabel->setFixedHeight(27);
+
+    QLabel * zOfFirstPointLabel = new QLabel(this);
+    zOfFirstPointLabel->setText("  ");
+//    zOfFirstPointLabel->setFrameStyle(QFrame::Box | QFrame::Plain);
+//    zOfFirstPointLabel->setLineWidth(5);
+    zOfFirstPointLabel->setFixedWidth(25);
+    zOfFirstPointLabel->setFixedHeight(25);
+
+    xOfFirstPointSpinBox  = new QSpinBox(this);
+    xOfFirstPointSpinBox->setMaximum(17);
+    xOfFirstPointSpinBox->setMinimum(-15);
+    xOfFirstPointSpinBox->setFixedWidth(86);
+    xOfFirstPointSpinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
+    xOfFirstPointSpinBox->setFixedHeight(25);
+    xOfFirstPointSpinBox->setFixedWidth(70);
+
+
+    yOfFirstPointSpinBox  = new QSpinBox(this);
+    yOfFirstPointSpinBox->setMaximum(17);
+    yOfFirstPointSpinBox->setMinimum(-15);
+    yOfFirstPointSpinBox->setFixedWidth(86);
+    yOfFirstPointSpinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
+    yOfFirstPointSpinBox->setFixedHeight(25);
+    yOfFirstPointSpinBox->setFixedWidth(70);
+
+
+    bresenhamLineLayout->addWidget(bresenhamLineButton);
+
+    firstPointBresenhamLineLayout->setSpacing(10);
+    firstPointBresenhamLineLayout->addWidget(xOfFirstPointLabel, 0);
+    firstPointBresenhamLineLayout->addWidget(xOfFirstPointSpinBox, 0, Qt::AlignLeft);
+    firstPointBresenhamLineLayout->addWidget(yOfFirstPointLabel, 0, Qt::AlignLeft);
+    firstPointBresenhamLineLayout->addWidget(yOfFirstPointSpinBox, 0, Qt::AlignLeft);
+    firstPointBresenhamLineLayout->addWidget(zOfFirstPointLabel, 1, Qt::AlignLeft);
+
+    QLabel * xOfSecondPointLabel = new QLabel(this);
+    xOfSecondPointLabel->setText("X2:");
+//    xOfSecondPointLabel->setFrameStyle(QFrame::Box | QFrame::Plain);
+//    xOfSecondPointLabel->setLineWidth(5);
+    xOfSecondPointLabel->setFixedWidth(25);
+    xOfSecondPointLabel->setFixedHeight(27);
+
+    QLabel * yOfSecondPointLabel = new QLabel(this);
+    yOfSecondPointLabel->setText("   Y2 : ");
+//    yOfSecondPointLabel->setFrameStyle(QFrame::Box | QFrame::Plain);
+//    yOfSecondPointLabel->setLineWidth(5);
+    yOfSecondPointLabel->setFixedWidth(27);
+    yOfSecondPointLabel->setFixedHeight(25);
+
+    QLabel * zOfSecondPointLabel = new QLabel(this);
+    zOfSecondPointLabel->setText("  ");
+    zOfSecondPointLabel->setFrameStyle(QFrame::Box | QFrame::Plain);
+    zOfSecondPointLabel->setLineWidth(5);
+    zOfSecondPointLabel->setFixedWidth(25);
+    zOfSecondPointLabel->setFixedHeight(1);
+
+    xOfSecondPointSpinBox  = new QSpinBox(this);
+    xOfSecondPointSpinBox->setMaximum(17);
+    xOfSecondPointSpinBox->setMinimum(-15);
+    xOfSecondPointSpinBox->setFixedWidth(86);
+    xOfSecondPointSpinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
+    xOfSecondPointSpinBox->setFixedHeight(25);
+    xOfSecondPointSpinBox->setFixedWidth(70);
+
+
+    yOfSecondPointSpinBox  = new QSpinBox(this);
+    yOfSecondPointSpinBox->setMaximum(17);
+    yOfSecondPointSpinBox->setMinimum(-15);
+    yOfSecondPointSpinBox->setFixedWidth(86);
+    yOfSecondPointSpinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
+    yOfSecondPointSpinBox->setFixedHeight(25);
+    yOfSecondPointSpinBox->setFixedWidth(70);
+
+
+    secondPointBresenhamLineLayout->setSpacing(10);
+    secondPointBresenhamLineLayout->addWidget(xOfSecondPointLabel, 1, Qt::AlignLeft);
+    secondPointBresenhamLineLayout->addWidget(xOfSecondPointSpinBox, 0, Qt::AlignLeft);
+    secondPointBresenhamLineLayout->addWidget(yOfSecondPointLabel, 1, Qt::AlignLeft);
+    secondPointBresenhamLineLayout->addWidget(yOfSecondPointSpinBox, 0, Qt::AlignLeft);
+    secondPointBresenhamLineLayout->addWidget(zOfSecondPointLabel, 1, Qt::AlignRight);
+
+    bresenhamLineLayout->addLayout(firstPointBresenhamLineLayout);
+    bresenhamLineLayout->addLayout(secondPointBresenhamLineLayout);
+
+
+
+
+
+
+
+    QPushButton* refreshPushButton = new QPushButton(QString("Refresh"), this);
+    refreshPushButton->setFixedHeight(60);
+    refreshPushButton->setFixedWidth(240);
+    connect(refreshPushButton, SIGNAL(clicked()), this, SLOT(refreshImageCircle()));
+
+
+
+
+
 
     infoAreaLayout->addWidget(refreshPushButton, 0, Qt::AlignBottom);
 
     paintingAreaLayout->setGeometry(QRect(0, 0, 550, 600));
     infoAreaLayout->setGeometry(QRect(555, 0, 230, 595));
     bresenhamCircleButtonLayout->setGeometry(QRect(560, 20, 250, 140));
+
+    bresenhamLineLayout->setGeometry(QRect(555, 170, 230, 140));
+    firstPointBresenhamLineLayout->setGeometry(QRect(560, 155, 250, 140));
+    secondPointBresenhamLineLayout->setGeometry(QRect(560, 180, 250, 140));
 
 
 
@@ -129,8 +242,7 @@ MainWindow::~MainWindow() {
 
 }
 
-void MainWindow::paintEvent(QPaintEvent *)
-{
+void MainWindow::paintEvent(QPaintEvent *) {
     QPainter painter(this);
 
     painter.setPen(QPen(Qt::black, image.getPenWidth()));
@@ -166,59 +278,69 @@ void MainWindow::paintEvent(QPaintEvent *)
         painter.setPen(QPen(Qt::black, image.getPenWidth()));
     }
 
-    int radius = image.radiusOfCircle;
-    int x0 = 275 + image.centerOfCircleX * 15;
-    int y0 = 300 - image.centerOfCircleY * 15;
-    painter.setBrush(QBrush(Qt::black,Qt::BDiagPattern));
-    int x = radius;
-    int y = 0;
-    int radiusError = 1 - x;
-    image.setPenWidth(3);
-    painter.setPen(QPen(Qt::black, image.getPenWidth()));
+    if(image.currentLine == BRESENHAMCIRCLE){
+        int radius = image.radiusOfCircle;
+        int x0 = 275 + image.centerOfCircleX * 15;
+        int y0 = 300 - image.centerOfCircleY * 15;
+        painter.setBrush(QBrush(Qt::black,Qt::BDiagPattern));
+        int x = radius;
+        int y = 0;
+        int radiusError = 1 - x;
+        image.setPenWidth(3);
+        painter.setPen(QPen(Qt::black, image.getPenWidth()));
 
-    if(radius != 0){
-        while (x >= y)
-        {
-            painter.drawRect( x * cellSize + x0,  y * cellSize + y0, cellSize, cellSize);
-            painter.drawRect( y * cellSize + x0,  x * cellSize + y0, cellSize, cellSize);
-            painter.drawRect(-x * cellSize + x0,  y * cellSize + y0, cellSize, cellSize);
-            painter.drawRect(-y * cellSize + x0,  x * cellSize + y0, cellSize, cellSize);
-            painter.drawRect(-x * cellSize + x0, -y * cellSize + y0, cellSize, cellSize);
-            painter.drawRect(-y * cellSize + x0, -x * cellSize + y0, cellSize, cellSize);
-            painter.drawRect( x * cellSize + x0, -y * cellSize + y0, cellSize, cellSize);
-            painter.drawRect( y * cellSize + x0, -x * cellSize + y0, cellSize, cellSize);
-            y++;
-            if (radiusError < 0)
+        if(radius != 0){
+            while (x >= y)
             {
-                radiusError += 2 * y + 1;
-            }
-            else
-            {
-                x--;
-                radiusError += 2 * (y - x + 1);
+                painter.drawRect( x * cellSize + x0,  y * cellSize + y0, cellSize, cellSize);
+                painter.drawRect( y * cellSize + x0,  x * cellSize + y0, cellSize, cellSize);
+                painter.drawRect(-x * cellSize + x0,  y * cellSize + y0, cellSize, cellSize);
+                painter.drawRect(-y * cellSize + x0,  x * cellSize + y0, cellSize, cellSize);
+                painter.drawRect(-x * cellSize + x0, -y * cellSize + y0, cellSize, cellSize);
+                painter.drawRect(-y * cellSize + x0, -x * cellSize + y0, cellSize, cellSize);
+                painter.drawRect( x * cellSize + x0, -y * cellSize + y0, cellSize, cellSize);
+                painter.drawRect( y * cellSize + x0, -x * cellSize + y0, cellSize, cellSize);
+                y++;
+                if (radiusError < 0)
+                {
+                    radiusError += 2 * y + 1;
+                }
+                else
+                {
+                    x--;
+                    radiusError += 2 * (y - x + 1);
+                }
             }
         }
     }
-
-
-
 
 }
 
 
 
 // Color
-void MainWindow::refreshImage() {
-//    if(bresenhamCircleButton->isA)
-    int x = xSpinBox->value();
-    int y = ySpinBox->value();
+void MainWindow::refreshImageCircle() {
+    image.currentLine = BRESENHAMCIRCLE;
+    int x = xCenterOfCircleSpinBox->value();
+    int y = yCenterOfCircleSpinBox->value();
     int r = radiusSpinBox->value();
 
     image.setCirceRadius(r);
     image.setCirceCenterX(x);
     image.setCirceCenterY(y);
     repaint();
+}
 
+void MainWindow::refreshImageLine() {
+//    image.currentLine = BRESENHAMCIRCLE;
+//    int x = xCenterOfCircleSpinBox->value();
+//    int y = yCenterOfCircleSpinBox->value();
+//    int r = radiusSpinBox->value();
 
+//    image.setCirceRadius(r);
+//    image.setCirceCenterX(x);
+//    image.setCirceCenterY(y);
+    std::cout << "CONNECTED LINE" << std::endl;
+    repaint();
 }
 

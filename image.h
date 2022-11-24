@@ -6,6 +6,12 @@
 #include <QVector>
 #include <QLabel>
 #include <QString>
+enum Lines
+
+{
+    BRESENHAMCIRCLE,
+    BRESENHAMLINE,
+};
 
 class Image {
 private:
@@ -17,6 +23,7 @@ public:
     int centerOfCircleX;
     int centerOfCircleY;
     int radiusOfCircle;
+    Lines currentLine;
     Image();
     QVector<int> data;
     std::vector<QLabel*> labels;
