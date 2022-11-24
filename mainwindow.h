@@ -43,8 +43,6 @@ private:
     QSpinBox *radiusSpinBox;
     QSpinBox *xCenterOfCircleSpinBox;
     QSpinBox *yCenterOfCircleSpinBox;
-
-
     QRadioButton* bresenhamLineButton;
 
     QSpinBox *xOfFirstPointSpinBox;
@@ -56,11 +54,13 @@ private:
 protected:
     void paintEvent(QPaintEvent*) override;
 
-private slots:
+public slots:
 
     void refresh();
     void refreshImageCircle();
     void refreshImageLine();
+    void valueInLinesChanged();
+    void valueInCircleChanged();
 
 
 private:
