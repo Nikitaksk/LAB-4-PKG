@@ -14,6 +14,9 @@ private:
     int penWidth;
 
 public:
+    int centerOfCircleX;
+    int centerOfCircleY;
+    int radiusOfCircle;
     Image();
     QVector<int> data;
     std::vector<QLabel*> labels;
@@ -22,9 +25,14 @@ public:
     void setPenWidth(int pw);
     int getPenWidth();
 
-    bool openImage(const QString &fileName);
-    bool saveImage(const QString &fileName, const char *fileFormat);
-    void setPenColor(const QColor &newColor);
+    void setCirceCenterX(int x);
+    void setCirceCenterY(int y);
+    void setCirceRadius(int r);
+
+    int getCirceCenterX();
+    int getCirceCenterY();
+    int getCirceRadius();
+
 
 
 };

@@ -3,6 +3,9 @@
 Image::Image() {
     generateData();
     this->penWidth = 3;
+    centerOfCircleX = 0;
+    centerOfCircleY = 0;
+    radiusOfCircle = 0;
 }
 
 void Image::generateData() {
@@ -17,5 +20,25 @@ void Image::setPenWidth(int pw){
 }
 int Image::getPenWidth(){
     return this->penWidth;
+}
+
+void Image::setCirceCenterX(int x){
+    this->centerOfCircleX = x;
+}
+void Image::setCirceCenterY(int y){
+    this->centerOfCircleY = y;
+}
+void Image::setCirceRadius(int r){
+    this->radiusOfCircle = r;
+}
+
+int Image::getCirceCenterX(){
+    return this->centerOfCircleX;
+}
+int Image::getCirceCenterY(){
+    return this->centerOfCircleY;
+}
+int Image::getCirceRadius(){
+    return this->radiusOfCircle;
 }
 

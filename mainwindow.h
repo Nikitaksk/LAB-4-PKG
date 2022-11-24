@@ -7,6 +7,13 @@
 #include <QVBoxLayout>
 #include <QMenuBar>
 #include <chrono>
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLayout>
+#include <QRadioButton>
+#include <QSpinBox>
+#include <QPushButton>
 
 #include "image.h"
 
@@ -32,37 +39,21 @@ private:
 
     Image image;
 
-    QMenu *fileMenu;
-    QMenu *colorMenu;
-    QMenu *helpMenu;
+    QRadioButton* bresenhamCircleButton;
 
-    QAction *openAction;
-    QAction *saveAsAction;
-    QAction *closeAction;
-    QAction *exitAction;
-
-    QAction *setPenColorAction;
-    QAction *setBrushColorAction;
-
-    QAction *callAboutAction;
-
-
-    QLabel *infoLabel;
+    QSpinBox *radiusSpinBox;
+    QSpinBox *xSpinBox;
+    QSpinBox *ySpinBox;
 
 protected:
     void paintEvent(QPaintEvent*) override;
 
 private slots:
 
+    void refreshImage();
 
-    void setPenColor();
-    void setBrushColor();
-
-    void callAbout();
 
 private:
     bool wannaSave();
-
-
 };
 #endif // MAINWINDOW_H
