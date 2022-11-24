@@ -11,6 +11,7 @@ enum Lines
 {
     BRESENHAMCIRCLE,
     BRESENHAMLINE,
+    CLEAR
 };
 
 class Image {
@@ -23,6 +24,15 @@ public:
     int centerOfCircleX;
     int centerOfCircleY;
     int radiusOfCircle;
+
+    int bresenhamLineX1;
+    int bresenhamLineY1;
+    int bresenhamLineX2;
+    int bresenhamLineY2;
+
+
+
+
     Lines currentLine;
     Image();
     QVector<int> data;

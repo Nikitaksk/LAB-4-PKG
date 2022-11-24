@@ -58,6 +58,7 @@ protected:
 
 private slots:
 
+    void refresh();
     void refreshImageCircle();
     void refreshImageLine();
 
