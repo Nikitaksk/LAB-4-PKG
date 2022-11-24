@@ -34,38 +34,42 @@ void MainWindow::paintEvent(QPaintEvent *)
     QPainter painter(this);
 
     painter.setPen(QPen(Qt::black, image.getPenWidth()));
-    painter.drawLine(200,5,200,300);
-    painter.drawLine(200,5,195,15);
-    painter.drawLine(200,5,205,15);
 
-    painter.drawLine(0,150,400,150);
-    painter.drawLine(400,150,390,155);
-    painter.drawLine(400,150,390,145);
+    painter.drawLine(550,0,550,600);
+
+    painter.drawLine(275,5,275,600);
+    painter.drawLine(275,5,270,10);
+    painter.drawLine(275,5,280,10);
+
+
+    painter.drawLine(0,300,550,300);
+    painter.drawLine(550,300,545,305);
+    painter.drawLine(550,300,545,295);
 
     int cellSize = 15;
 
-    for(int i = 5 + cellSize; i < 400 - cellSize; i+=cellSize){
-        painter.drawLine(i,152,i,148);
+    for(int i = 5 + cellSize; i < 550 - cellSize; i+=cellSize){
+        painter.drawLine(i,302,i,298);
         image.setPenWidth(1);
         painter.setPen(QPen(Qt::black, image.getPenWidth()));
 
-        painter.drawLine(i, 2 *cellSize - 5, i, 300 - 5);
+        painter.drawLine(i, 10, i, 600 - 10);
         image.setPenWidth(3);
         painter.setPen(QPen(Qt::black, image.getPenWidth()));
     }
 
-    for(int i = 300 - cellSize ; i >  cellSize; i-=cellSize){
-        painter.drawLine(198,i,202,i);
+    for(int i = 600 - cellSize ; i > 1; i-=cellSize){
+        painter.drawLine(273,i,277,i);
         image.setPenWidth(1);
         painter.setPen(QPen(Qt::black, image.getPenWidth()));
 
-        painter.drawLine(cellSize, i, 400 - cellSize, i);
+        painter.drawLine(cellSize, i, 550-cellSize, i);
         image.setPenWidth(3);
         painter.setPen(QPen(Qt::black, image.getPenWidth()));
     }
-    int radius = 8;
-    int x0 = 200;
-    int y0 = 150;
+    int radius = 16;
+    int x0 = 275;
+    int y0 = 300;
     painter.setBrush(QBrush(Qt::black,Qt::BDiagPattern));
     int x = radius;
     int y = 0;
@@ -77,11 +81,8 @@ void MainWindow::paintEvent(QPaintEvent *)
     while (x >= y)
     {
         painter.drawRect( x * cellSize + x0,  y * cellSize + y0, cellSize, cellSize);
-        std::this_thread::sleep_for (std::chrono::milliseconds(1000));
         painter.drawRect( y * cellSize + x0,  x * cellSize + y0, cellSize, cellSize);
-
         painter.drawRect(-x * cellSize + x0,  y * cellSize + y0, cellSize, cellSize);
-
         painter.drawRect(-y * cellSize + x0,  x * cellSize + y0, cellSize, cellSize);
         painter.drawRect(-x * cellSize + x0, -y * cellSize + y0, cellSize, cellSize);
         painter.drawRect(-y * cellSize + x0, -x * cellSize + y0, cellSize, cellSize);
