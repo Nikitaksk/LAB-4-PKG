@@ -11,6 +11,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QGridLayout>
 #include <QLayout>
 #include <QRadioButton>
 #include <QSpinBox>
@@ -22,9 +23,10 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
 
     ui -> setupUi(this);
     MainWindow::setMinimumSize(800, 600);
+
     image.currentLine = CLEAR;
 
-
+    QGridLayout* mainLayout = new QGridLayout();
     QHBoxLayout * paintingAreaLayout = new QHBoxLayout();
     QVBoxLayout * infoAreaLayout = new QVBoxLayout();
 
@@ -195,21 +197,29 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     bresenhamLineLayout -> addLayout(firstPointBresenhamLineLayout);
     bresenhamLineLayout -> addLayout(secondPointBresenhamLineLayout);
 
-    QPushButton * refreshPushButton = new QPushButton(QString("Refresh"), this);
-    refreshPushButton -> setFixedHeight(60);
-    refreshPushButton -> setFixedWidth(240);
-    connect(refreshPushButton, SIGNAL(clicked()), this, SLOT(refresh()));
 
-    infoAreaLayout -> addWidget(refreshPushButton, 0, Qt::AlignBottom);
 
-    paintingAreaLayout -> setGeometry(QRect(0, 0, this->width() * 0.6875, this->height()));
-    infoAreaLayout -> setGeometry(QRect(this->width() * 0.69375, 0, this->width() * 0.2875, 595));
-    bresenhamCircleButtonLayout -> setGeometry(QRect(this->width() * 0.7, 20, this->width() * 0.3125, this->height() * 0.233333333));
 
-    bresenhamLineLayout -> setGeometry(QRect(this->width() * 0.69375, this->height() * 0.2833333, 230, this->height() * 0.233333333));
-    firstPointBresenhamLineLayout -> setGeometry(QRect(this->width() * 0.7, this->height() * 0.25833333, this->width() * 0.3125, this->height() * 0.233333333));
-    secondPointBresenhamLineLayout -> setGeometry(QRect(this->width() * 0.7, this->height() * 0.3, this->width() * 0.3125, this->height() * 0.233333333));
 
+    paintingAreaLayout -> setGeometry(QRect(0, 0, 600, this->height()));
+//    infoAreaLayout -> setGeometry(QRect(this->width() * 0.69375, 0, this->width() * 0.2875, 595));
+//    bresenhamCircleButtonLayout -> setGeometry(QRect(this->width() * 0.7, 20, this->width() * 0.3125, this->height() * 0.233333333));
+
+//    bresenhamLineLayout -> setGeometry(QRect(this->width() * 0.69375, this->height() * 0.2833333, 230, this->height() * 0.233333333));
+//    firstPointBresenhamLineLayout -> setGeometry(QRect(this->width() * 0.7, this->height() * 0.25833333, this->width() * 0.3125, this->height() * 0.233333333));
+//    secondPointBresenhamLineLayout -> setGeometry(QRect(this->width() * 0.7, this->height() * 0.3, this->width() * 0.3125, this->height() * 0.233333333));
+
+//    mainLayout->addWidget()
+
+    mainLayout->addLayout(paintingAreaLayout,0,0, Qt::AlignLeft);
+    mainLayout->setColumnMinimumWidth(0, 550);
+    mainLayout->setColumnMinimumWidth(1, 250);
+    mainLayout->setRowMinimumHeight(1,900);
+    mainLayout->addLayout(infoAreaLayout, 0, 1, Qt::AlignRight);
+
+
+//    MainWindow::setLayout(infoAreaLayout);
+    centralWidget()->setLayout(mainLayout);
 
 
 
@@ -455,7 +465,6 @@ void MainWindow::resizeEvent(QResizeEvent * /*resizeEvent*/) {
     }
 
     MainWindow::resize(contentsWidth, contentsHeight);
-//    resizeContents(contentsWidth, contentsHeight);
 
 //    paintingAreaLayout -> setGeometry(QRect(0, 0, this->width() * 0.6875, this->height()));
 //    infoAreaLayout -> setGeometry(QRect(this->width() * 0.69375, 0, this->width() * 0.2875, 595));
