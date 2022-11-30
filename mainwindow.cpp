@@ -22,7 +22,7 @@
 MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWindow) {
 
     ui -> setupUi(this);
-    MainWindow::setMinimumSize(800, 600);
+    MainWindow::setMinimumSize(850, 600);
 
     image.currentLine = CLEAR;
 
@@ -201,7 +201,7 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
 
 
 
-    paintingAreaLayout -> setGeometry(QRect(0, 0, 600, this->height()));
+//    paintingAreaLayout -> setGeometry(QRect(0, 0, this->width() * 0.6875, this->height()));
 //    infoAreaLayout -> setGeometry(QRect(this->width() * 0.69375, 0, this->width() * 0.2875, 595));
 //    bresenhamCircleButtonLayout -> setGeometry(QRect(this->width() * 0.7, 20, this->width() * 0.3125, this->height() * 0.233333333));
 
@@ -211,11 +211,16 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
 
 //    mainLayout->addWidget()
 
-    mainLayout->addLayout(paintingAreaLayout,0,0, Qt::AlignLeft);
-    mainLayout->setColumnMinimumWidth(0, 550);
-    mainLayout->setColumnMinimumWidth(1, 250);
+    mainLayout->addLayout(paintingAreaLayout,0, 0, Qt::AlignLeft);
+    mainLayout->addLayout(infoAreaLayout, 0, 1, Qt::AlignLeft);
+    mainLayout->setColumnStretch(0, 1);
+    mainLayout->setColumnStretch(1, 0);
+
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+
+    mainLayout->setColumnMinimumWidth(0, 650);
     mainLayout->setRowMinimumHeight(1,900);
-    mainLayout->addLayout(infoAreaLayout, 0, 1, Qt::AlignRight);
+
 
 
 //    MainWindow::setLayout(infoAreaLayout);
@@ -337,7 +342,7 @@ void MainWindow::paintEvent(QPaintEvent * ) {
         counter--;
         painter.drawText(QRect(this->width() * 0.3475, i + 3, this->width() * 0.3475 - 1, i), QString::number(counter));
 
-        painter.drawLine(this->width() / 90, i, this->width() * 0.6875 - this->width() / 90, i);
+        painter.drawLine(this->width() / 90, i, this->width() * 0.6875- this->width() / 90, i);
 
     }
     painter.setBrush(QBrush(Qt::black, Qt::BDiagPattern));
@@ -384,7 +389,7 @@ void MainWindow::paintEvent(QPaintEvent * ) {
         int y1 = (this->height() / 2 - image.bresenhamLineY1 * cellSize);
 
         int x2 = (this->width() * 0.6875 / 2 + (image.bresenhamLineX2) * cellSize);
-        int y2 = (300 - (image.bresenhamLineY2) * cellSize);
+        int y2 = (this->height() / 2 - (image.bresenhamLineY2) * cellSize);
 
         const int deltaX = abs(x2 - x1);
         const int deltaY = abs(y2 - y1);
