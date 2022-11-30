@@ -51,8 +51,17 @@ private:
     QSpinBox *xOfSecondPointSpinBox;
     QSpinBox *yOfSecondPointSpinBox;
 
+    QHBoxLayout * paintingAreaLayout;
+    QVBoxLayout * infoAreaLayout ;
+    QVBoxLayout * bresenhamCircleButtonLayout;
+    QHBoxLayout * bresenhamEntryCenterLayout ;
+    QVBoxLayout * bresenhamLineLayout ;
+    QHBoxLayout * firstPointBresenhamLineLayout ;
+    QHBoxLayout * secondPointBresenhamLineLayout ;
+
 protected:
     void paintEvent(QPaintEvent*) override;
+    void resizeEvent(QResizeEvent*) override;
 
 public slots:
 
