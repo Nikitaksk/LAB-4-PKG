@@ -43,10 +43,18 @@ private:
     QSpinBox *radiusSpinBox;
     QSpinBox *xCenterOfCircleSpinBox;
     QSpinBox *yCenterOfCircleSpinBox;
+
+
     QRadioButton* bresenhamLineButton;
 
     QSpinBox *xOfFirstPointSpinBox;
     QSpinBox *yOfFirstPointSpinBox;
+
+    QRadioButton* stepLineButton;
+    QSpinBox *x1StepSpinBox;
+    QSpinBox *y1StepSpinBox;
+    QSpinBox *x2StepSpinBox;
+    QSpinBox *y2StepSpinBox;
 
     QSpinBox *xOfSecondPointSpinBox;
     QSpinBox *yOfSecondPointSpinBox;
@@ -69,7 +77,9 @@ public slots:
     void refreshImageCircle();
     void refreshImageLine();
     void valueInLinesChanged();
+    void valueInStepChanged();
     void valueInCircleChanged();
+    void refreshImageStepLine();
 
 
 private:

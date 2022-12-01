@@ -24,8 +24,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     ui -> setupUi(this);
     MainWindow::setMinimumSize(850, 600);
 
-    image.currentLine = CLEAR;
-
     QGridLayout* mainLayout = new QGridLayout();
     QHBoxLayout * paintingAreaLayout = new QHBoxLayout();
     QVBoxLayout * infoAreaLayout = new QVBoxLayout();
@@ -41,6 +39,8 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     infoAreaLayout -> addLayout(bresenhamLineLayout);
 
     bresenhamEntryCenterLayout -> setSpacing(1);
+
+    QGridLayout* bresenhamCircleLayout = new QGridLayout();
     bresenhamCircleButton = new QRadioButton(QString("Bresenham (Circle)"), this);
     connect(bresenhamCircleButton, SIGNAL(clicked()), this, SLOT(refreshImageCircle()));
 
@@ -100,6 +100,9 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     bresenhamEntryCenterLayout -> addWidget(emptyCenterLabel, 1, Qt::AlignLeft);
     bresenhamCircleButtonLayout -> addWidget(radiusCircleLabel, 1, Qt::AlignLeft);
     bresenhamCircleButtonLayout -> addWidget(radiusSpinBox, 1, Qt::AlignLeft);
+
+
+
 
     bresenhamLineButton = new QRadioButton(QString("Bresenham (Line)"), this);
     connect(bresenhamLineButton, SIGNAL(clicked()), this, SLOT(refreshImageLine()));
@@ -199,22 +202,86 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
 
 
 
+    QGridLayout * stepAlgorythm = new QGridLayout();
+    QLabel * xOfFirstPointLabelStep = new QLabel(this);
+    xOfFirstPointLabelStep -> setText("X1:");
+    xOfFirstPointLabelStep -> setFixedWidth(25);
+    xOfFirstPointLabelStep -> setFixedHeight(25);
+
+    QLabel * yOfFirstPointLabelStep = new QLabel(this);
+    yOfFirstPointLabelStep -> setText("Y1:");
+    yOfFirstPointLabelStep -> setFixedWidth(25);
+    yOfFirstPointLabelStep -> setFixedHeight(27);
+
+    QLabel * xOfSecondPointLabelStep = new QLabel(this);
+    xOfSecondPointLabelStep -> setText("X2:");
+    xOfSecondPointLabelStep -> setFixedWidth(25);
+    xOfSecondPointLabelStep -> setFixedHeight(25);
+
+    QLabel * yOfSecondPointLabelStep = new QLabel(this);
+    yOfSecondPointLabelStep -> setText("Y2:");
+    yOfSecondPointLabelStep -> setFixedWidth(25);
+    yOfSecondPointLabelStep -> setFixedHeight(27);
 
 
-//    paintingAreaLayout -> setGeometry(QRect(0, 0, this->width() * 0.6875, this->height()));
-//    infoAreaLayout -> setGeometry(QRect(this->width() * 0.69375, 0, this->width() * 0.2875, 595));
-//    bresenhamCircleButtonLayout -> setGeometry(QRect(this->width() * 0.7, 20, this->width() * 0.3125, this->height() * 0.233333333));
+    x1StepSpinBox = new QSpinBox(this);
+    x1StepSpinBox -> setMaximum(17);
+    x1StepSpinBox -> setMinimum(-15);
+    x1StepSpinBox -> setFixedWidth(86);
+    x1StepSpinBox -> setButtonSymbols(QAbstractSpinBox::NoButtons);
+    x1StepSpinBox -> setFixedHeight(25);
+    x1StepSpinBox -> setFixedWidth(70);
+    connect(x1StepSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInStepChanged()));
 
-//    bresenhamLineLayout -> setGeometry(QRect(this->width() * 0.69375, this->height() * 0.2833333, 230, this->height() * 0.233333333));
-//    firstPointBresenhamLineLayout -> setGeometry(QRect(this->width() * 0.7, this->height() * 0.25833333, this->width() * 0.3125, this->height() * 0.233333333));
-//    secondPointBresenhamLineLayout -> setGeometry(QRect(this->width() * 0.7, this->height() * 0.3, this->width() * 0.3125, this->height() * 0.233333333));
 
-//    mainLayout->addWidget()
+    y1StepSpinBox = new QSpinBox(this);
+    y1StepSpinBox -> setMaximum(17);
+    y1StepSpinBox -> setMinimum(-15);
+    y1StepSpinBox -> setFixedWidth(86);
+    y1StepSpinBox -> setButtonSymbols(QAbstractSpinBox::NoButtons);
+    y1StepSpinBox -> setFixedHeight(25);
+    y1StepSpinBox -> setFixedWidth(70);
+    connect(y1StepSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInStepChanged()));
+
+    x2StepSpinBox = new QSpinBox(this);
+    x2StepSpinBox -> setMaximum(17);
+    x2StepSpinBox -> setMinimum(-15);
+    x2StepSpinBox -> setFixedWidth(86);
+    x2StepSpinBox -> setButtonSymbols(QAbstractSpinBox::NoButtons);
+    x2StepSpinBox -> setFixedHeight(25);
+    x2StepSpinBox -> setFixedWidth(70);
+    connect( x2StepSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInStepChanged()));
+
+
+    y2StepSpinBox = new QSpinBox(this);
+    y2StepSpinBox -> setMaximum(17);
+    y2StepSpinBox -> setMinimum(-15);
+    y2StepSpinBox -> setFixedWidth(86);
+    y2StepSpinBox -> setButtonSymbols(QAbstractSpinBox::NoButtons);
+    y2StepSpinBox -> setFixedHeight(25);
+    y2StepSpinBox -> setFixedWidth(70);
+    connect( y2StepSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInStepChanged()));
+
+    stepLineButton = new QRadioButton(QString("Step"), this);
+    connect(stepLineButton, SIGNAL(clicked()), this, SLOT(refreshImageStepLine()));
+    stepAlgorythm->addWidget(stepLineButton,0,0);
+    stepAlgorythm->addWidget(xOfFirstPointLabelStep,1,0, Qt::AlignLeft);
+    stepAlgorythm->addWidget(x1StepSpinBox,1,1, Qt::AlignLeft);
+    stepAlgorythm->addWidget(yOfFirstPointLabelStep,1,2);
+    stepAlgorythm->addWidget(y1StepSpinBox,1,3);
+    stepAlgorythm->setColumnMinimumWidth(0,10);
+    stepAlgorythm->addWidget(xOfSecondPointLabelStep,2,0, Qt::AlignLeft);
+    stepAlgorythm->addWidget(x2StepSpinBox,2,1, Qt::AlignLeft);
+    stepAlgorythm->addWidget(yOfSecondPointLabelStep,2,2);
+    stepAlgorythm->addWidget(y2StepSpinBox,2,3);
+
 
     mainLayout->addLayout(paintingAreaLayout,0, 0, Qt::AlignLeft);
     mainLayout->addLayout(infoAreaLayout, 0, 1, Qt::AlignLeft);
+    mainLayout->addLayout(stepAlgorythm,1,1 , {Qt::AlignLeft, Qt::AlignTop});
     mainLayout->setColumnStretch(0, 1);
     mainLayout->setColumnStretch(1, 0);
+    mainLayout->setColumnStretch(2, 0);
 
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -383,7 +450,7 @@ void MainWindow::paintEvent(QPaintEvent * ) {
 
     if (image.currentLine == BRESENHAMLINE) {
 
-        painter.setPen(QPen(Qt::red, image.getPenWidth()));
+//        painter.setPen(QPen(Qt::red, image.getPenWidth()));
 
         int x1 = (this->width() * 0.6875 / 2 + image.bresenhamLineX1 * cellSize);
         int y1 = (this->height() / 2 - image.bresenhamLineY1 * cellSize);
@@ -393,13 +460,15 @@ void MainWindow::paintEvent(QPaintEvent * ) {
 
         const int deltaX = abs(x2 - x1);
         const int deltaY = abs(y2 - y1);
-        const int signX = x1 < x2 ? 1 : -1;
-        const int signY = y1 < y2 ? 1 : -1;
+        const int signX = x1 < x2 ? 15 : -15;
+        const int signY = y1 < y2 ? 15 : -15;
         int error = deltaX - deltaY;
-        painter.drawPoint(x2,y2);
+////        painter.drawPoint(x2,y2);
+        painter.drawRect(x2, y2 - cellSize, cellSize, cellSize);
         while(x1 != x2 || y1 != y2)
        {
-            painter.drawPoint(x1,y1);
+////            painter.drawPoint(x1,y1);
+            painter.drawRect(x1 , y1 - cellSize, cellSize, cellSize);
             int error2 = error * 2;
             if(error2 > -deltaY)
             {
@@ -412,9 +481,57 @@ void MainWindow::paintEvent(QPaintEvent * ) {
                 y1 += signY;
             }
         }
+
     }
+    if(image.currentLine == STEPLINE){
+        int x1 = (this->width() * 0.6875 / 2 + (image.bresenhamLineX1 * cellSize));
 
 
+        int y1 = (this->height() / 2 - image.bresenhamLineY1 * cellSize);
+
+        int x2 = (this->width() * 0.6875 / 2 + (image.bresenhamLineX2 * cellSize));
+        int y2 = (this->height() / 2 - (image.bresenhamLineY2) * cellSize);
+
+
+
+        if (x1 > x2)
+            {
+                std::swap(x1, x2);
+                std::swap(y1, y2);
+            }
+            int dx = x2 - x1;
+
+            int dy = y2 - y1;
+            if (dx == 0 && dy == 0)
+            {
+                 painter.drawRect(x1, y1 - cellSize, cellSize, cellSize);
+            }
+            else
+            {
+                 if (std::abs(dx) > std::abs(dy)) {
+                     for(int x = x1; x <= x2; x+=cellSize) {
+                         int temp = y1 + dy * (x - x1) / dx;
+                         painter.drawRect(x, ((temp - cellSize - 5 ) / cellSize) * cellSize, cellSize, cellSize);
+                     }
+                 }
+                 else
+                 {
+                     if (y1 > y2)
+                     {
+                         std::swap(x1, x2);
+                         std::swap(y1, y2);
+                     }
+
+                     for (int y = y1; y <= y2; y+=cellSize)
+                     {
+                         int temp = dx / dy * (y - y1) + x1;
+                         painter.drawRect(temp, y - cellSize, cellSize, cellSize);
+                     }
+                 }
+            }
+
+
+    }
 painter.setPen(QPen(Qt::black, image.getPenWidth()));
 
 }
@@ -429,6 +546,13 @@ void MainWindow::valueInCircleChanged(){
 //    image.currentLine = BRESENHAMCIRCLE;
     bresenhamCircleButton->setChecked(1);
     refreshImageCircle();
+}
+
+void MainWindow::valueInStepChanged(){
+//    image.currentLine = BRESENHAMCIRCLE;
+
+    stepLineButton->setChecked(1);
+    refreshImageStepLine();
 }
 
 void MainWindow::refreshImageCircle() {
@@ -449,6 +573,22 @@ void MainWindow::refreshImageLine() {
     int Y1 = yOfFirstPointSpinBox -> value();
     int X2 = xOfSecondPointSpinBox -> value();
     int Y2 = yOfSecondPointSpinBox -> value();
+
+
+    image.bresenhamLineX1 = X1;
+    image.bresenhamLineY1 = Y1;
+    image.bresenhamLineX2 = X2;
+    image.bresenhamLineY2 = Y2;
+    repaint();
+}
+
+void MainWindow::refreshImageStepLine() {
+    image.currentLine = BRESENHAMLINE;
+
+    int X1 = x1StepSpinBox -> value();
+    int Y1 = y1StepSpinBox -> value();
+    int X2 = x2StepSpinBox -> value();
+    int Y2 = y2StepSpinBox -> value();
 
 
     image.bresenhamLineX1 = X1;
@@ -479,6 +619,8 @@ void MainWindow::resizeEvent(QResizeEvent * /*resizeEvent*/) {
 //    firstPointBresenhamLineLayout -> setGeometry(QRect(this->width() * 0.7, this->height() * 0.25833333, this->width() * 0.3125, this->height() * 0.233333333));
 //    secondPointBresenhamLineLayout -> setGeometry(QRect(this->width() * 0.7, this->height() * 0.3, this->width() * 0.3125, this->height() * 0.233333333));
 }
+
+
 
 void MainWindow::refresh() {
     if (bresenhamCircleButton -> isChecked()) {
