@@ -6,9 +6,8 @@
 #include <QVector>
 #include <QLabel>
 #include <QString>
-enum Lines
 
-{
+enum Lines{
     BRESENHAMCIRCLE,
     BRESENHAMLINE,
     STEPLINE,

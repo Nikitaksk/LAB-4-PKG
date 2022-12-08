@@ -18,13 +18,12 @@
 #include <QPushButton>
 #include <cmath>
 
-
 MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWindow) {
 
     ui -> setupUi(this);
     MainWindow::setMinimumSize(850, 600);
 
-    QGridLayout* mainLayout = new QGridLayout();
+    QGridLayout * mainLayout = new QGridLayout();
     QHBoxLayout * paintingAreaLayout = new QHBoxLayout();
     QVBoxLayout * infoAreaLayout = new QVBoxLayout();
 
@@ -40,7 +39,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
 
     bresenhamEntryCenterLayout -> setSpacing(1);
 
-    QGridLayout* bresenhamCircleLayout = new QGridLayout();
     bresenhamCircleButton = new QRadioButton(QString("Bresenham (Circle)"), this);
     connect(bresenhamCircleButton, SIGNAL(clicked()), this, SLOT(refreshImageCircle()));
 
@@ -50,7 +48,7 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
 
     QLabel * xCenterLabel = new QLabel(this);
     xCenterLabel -> setText("X:");
-    xCenterLabel -> setFixedWidth(this->width()/40);
+    xCenterLabel -> setFixedWidth(this -> width() / 40);
 
     QLabel * emptyCenterLabel = new QLabel(this);
     emptyCenterLabel -> setText("    ");
@@ -74,7 +72,7 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     yCenterOfCircleSpinBox -> setMinimum(-15);
     yCenterOfCircleSpinBox -> setFixedWidth(86);
     yCenterOfCircleSpinBox -> setButtonSymbols(QAbstractSpinBox::NoButtons);
-    yCenterOfCircleSpinBox -> setFixedHeight(this->height()/24);
+    yCenterOfCircleSpinBox -> setFixedHeight(this -> height() / 24);
     yCenterOfCircleSpinBox -> setFixedWidth(70);
     connect(yCenterOfCircleSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInCircleChanged()));
 
@@ -101,9 +99,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     bresenhamCircleButtonLayout -> addWidget(radiusCircleLabel, 1, Qt::AlignLeft);
     bresenhamCircleButtonLayout -> addWidget(radiusSpinBox, 1, Qt::AlignLeft);
 
-
-
-
     bresenhamLineButton = new QRadioButton(QString("Bresenham (Line)"), this);
     connect(bresenhamLineButton, SIGNAL(clicked()), this, SLOT(refreshImageLine()));
 
@@ -122,7 +117,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     zOfFirstPointLabel -> setFixedWidth(25);
     zOfFirstPointLabel -> setFixedHeight(25);
 
-
     xOfFirstPointSpinBox = new QSpinBox(this);
     xOfFirstPointSpinBox -> setMaximum(17);
     xOfFirstPointSpinBox -> setMinimum(-15);
@@ -132,7 +126,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     xOfFirstPointSpinBox -> setFixedWidth(70);
     connect(xOfFirstPointSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInLinesChanged()));
 
-
     yOfFirstPointSpinBox = new QSpinBox(this);
     yOfFirstPointSpinBox -> setMaximum(17);
     yOfFirstPointSpinBox -> setMinimum(-15);
@@ -141,7 +134,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     yOfFirstPointSpinBox -> setFixedHeight(25);
     yOfFirstPointSpinBox -> setFixedWidth(70);
     connect(yOfFirstPointSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInLinesChanged()));
-
 
     bresenhamLineLayout -> addWidget(bresenhamLineButton);
 
@@ -164,8 +156,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
 
     QLabel * zOfSecondPointLabel = new QLabel(this);
     zOfSecondPointLabel -> setText("  ");
-    //    zOfSecondPointLabel -> setFrameStyle(QFrame::Box | QFrame::Plain);
-    //    zOfSecondPointLabel -> setLineWidth(5);
     zOfSecondPointLabel -> setFixedWidth(25);
     zOfSecondPointLabel -> setFixedHeight(1);
 
@@ -178,7 +168,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     xOfSecondPointSpinBox -> setFixedWidth(70);
     connect(xOfSecondPointSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInLinesChanged()));
 
-
     yOfSecondPointSpinBox = new QSpinBox(this);
     yOfSecondPointSpinBox -> setMaximum(17);
     yOfSecondPointSpinBox -> setMinimum(-15);
@@ -189,7 +178,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
 
     connect(yOfSecondPointSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInLinesChanged()));
 
-
     secondPointBresenhamLineLayout -> setSpacing(10);
     secondPointBresenhamLineLayout -> addWidget(xOfSecondPointLabel, 1, Qt::AlignLeft);
     secondPointBresenhamLineLayout -> addWidget(xOfSecondPointSpinBox, 0, Qt::AlignLeft);
@@ -199,8 +187,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
 
     bresenhamLineLayout -> addLayout(firstPointBresenhamLineLayout);
     bresenhamLineLayout -> addLayout(secondPointBresenhamLineLayout);
-
-
 
     QGridLayout * stepAlgorythm = new QGridLayout();
     QLabel * xOfFirstPointLabelStep = new QLabel(this);
@@ -223,7 +209,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     yOfSecondPointLabelStep -> setFixedWidth(25);
     yOfSecondPointLabelStep -> setFixedHeight(27);
 
-
     x1StepSpinBox = new QSpinBox(this);
     x1StepSpinBox -> setMaximum(17);
     x1StepSpinBox -> setMinimum(-15);
@@ -232,7 +217,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     x1StepSpinBox -> setFixedHeight(25);
     x1StepSpinBox -> setFixedWidth(70);
     connect(x1StepSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInStepChanged()));
-
 
     y1StepSpinBox = new QSpinBox(this);
     y1StepSpinBox -> setMaximum(17);
@@ -250,8 +234,7 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     x2StepSpinBox -> setButtonSymbols(QAbstractSpinBox::NoButtons);
     x2StepSpinBox -> setFixedHeight(25);
     x2StepSpinBox -> setFixedWidth(70);
-    connect( x2StepSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInStepChanged()));
-
+    connect(x2StepSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInStepChanged()));
 
     y2StepSpinBox = new QSpinBox(this);
     y2StepSpinBox -> setMaximum(17);
@@ -260,23 +243,20 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     y2StepSpinBox -> setButtonSymbols(QAbstractSpinBox::NoButtons);
     y2StepSpinBox -> setFixedHeight(25);
     y2StepSpinBox -> setFixedWidth(70);
-    connect( y2StepSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInStepChanged()));
+    connect(y2StepSpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInStepChanged()));
 
     stepLineButton = new QRadioButton(QString("Step"), this);
     connect(stepLineButton, SIGNAL(clicked()), this, SLOT(refreshImageStepLine()));
-    stepAlgorythm->addWidget(stepLineButton,0,0);
-    stepAlgorythm->addWidget(xOfFirstPointLabelStep,1,0, Qt::AlignLeft);
-    stepAlgorythm->addWidget(x1StepSpinBox,1,1, Qt::AlignLeft);
-    stepAlgorythm->addWidget(yOfFirstPointLabelStep,1,2);
-    stepAlgorythm->addWidget(y1StepSpinBox,1,3);
-    stepAlgorythm->setColumnMinimumWidth(0,10);
-    stepAlgorythm->addWidget(xOfSecondPointLabelStep,2,0, Qt::AlignLeft);
-    stepAlgorythm->addWidget(x2StepSpinBox,2,1, Qt::AlignLeft);
-    stepAlgorythm->addWidget(yOfSecondPointLabelStep,2,2);
-    stepAlgorythm->addWidget(y2StepSpinBox,2,3);
-
-
-
+    stepAlgorythm -> addWidget(stepLineButton, 0, 0);
+    stepAlgorythm -> addWidget(xOfFirstPointLabelStep, 1, 0, Qt::AlignLeft);
+    stepAlgorythm -> addWidget(x1StepSpinBox, 1, 1, Qt::AlignLeft);
+    stepAlgorythm -> addWidget(yOfFirstPointLabelStep, 1, 2);
+    stepAlgorythm -> addWidget(y1StepSpinBox, 1, 3);
+    stepAlgorythm -> setColumnMinimumWidth(0, 10);
+    stepAlgorythm -> addWidget(xOfSecondPointLabelStep, 2, 0, Qt::AlignLeft);
+    stepAlgorythm -> addWidget(x2StepSpinBox, 2, 1, Qt::AlignLeft);
+    stepAlgorythm -> addWidget(yOfSecondPointLabelStep, 2, 2);
+    stepAlgorythm -> addWidget(y2StepSpinBox, 2, 3);
 
     QGridLayout * DDAAlgorythm = new QGridLayout();
     QLabel * xOfFirstPointLabelDDA = new QLabel(this);
@@ -299,7 +279,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     yOfSecondPointLabelDDA -> setFixedWidth(25);
     yOfSecondPointLabelDDA -> setFixedHeight(27);
 
-
     x1DDASpinBox = new QSpinBox(this);
     x1DDASpinBox -> setMaximum(17);
     x1DDASpinBox -> setMinimum(-15);
@@ -308,7 +287,6 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     x1DDASpinBox -> setFixedHeight(25);
     x1DDASpinBox -> setFixedWidth(70);
     connect(x1DDASpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInDDAChanged()));
-
 
     y1DDASpinBox = new QSpinBox(this);
     y1DDASpinBox -> setMaximum(17);
@@ -326,8 +304,7 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     x2DDASpinBox -> setButtonSymbols(QAbstractSpinBox::NoButtons);
     x2DDASpinBox -> setFixedHeight(25);
     x2DDASpinBox -> setFixedWidth(70);
-    connect( x2DDASpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInDDAChanged()));
-
+    connect(x2DDASpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInDDAChanged()));
 
     y2DDASpinBox = new QSpinBox(this);
     y2DDASpinBox -> setMaximum(17);
@@ -336,50 +313,38 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     y2DDASpinBox -> setButtonSymbols(QAbstractSpinBox::NoButtons);
     y2DDASpinBox -> setFixedHeight(25);
     y2DDASpinBox -> setFixedWidth(70);
-    connect( y2DDASpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInDDAChanged()));
+    connect(y2DDASpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInDDAChanged()));
 
     DDALineButton = new QRadioButton(QString("DDA"), this);
     connect(DDALineButton, SIGNAL(clicked()), this, SLOT(refreshImageDDALine()));
-    DDAAlgorythm->addWidget(DDALineButton,0,0);
-    DDAAlgorythm->addWidget(xOfFirstPointLabelDDA,1,0, Qt::AlignLeft);
-    DDAAlgorythm->addWidget(x1DDASpinBox,1,1, Qt::AlignLeft);
-    DDAAlgorythm->addWidget(yOfFirstPointLabelDDA,1,2);
-    DDAAlgorythm->addWidget(y1DDASpinBox,1,3);
-    DDAAlgorythm->setColumnMinimumWidth(0,10);
-    DDAAlgorythm->addWidget(xOfSecondPointLabelDDA,2,0, Qt::AlignLeft);
-    DDAAlgorythm->addWidget(x2DDASpinBox,2,1, Qt::AlignLeft);
-    DDAAlgorythm->addWidget(yOfSecondPointLabelDDA,2,2);
-    DDAAlgorythm->addWidget(y2DDASpinBox,2,3);
+    DDAAlgorythm -> addWidget(DDALineButton, 0, 0);
+    DDAAlgorythm -> addWidget(xOfFirstPointLabelDDA, 1, 0, Qt::AlignLeft);
+    DDAAlgorythm -> addWidget(x1DDASpinBox, 1, 1, Qt::AlignLeft);
+    DDAAlgorythm -> addWidget(yOfFirstPointLabelDDA, 1, 2);
+    DDAAlgorythm -> addWidget(y1DDASpinBox, 1, 3);
+    DDAAlgorythm -> setColumnMinimumWidth(0, 10);
+    DDAAlgorythm -> addWidget(xOfSecondPointLabelDDA, 2, 0, Qt::AlignLeft);
+    DDAAlgorythm -> addWidget(x2DDASpinBox, 2, 1, Qt::AlignLeft);
+    DDAAlgorythm -> addWidget(yOfSecondPointLabelDDA, 2, 2);
+    DDAAlgorythm -> addWidget(y2DDASpinBox, 2, 3);
+
+    stepAlgorythm -> addLayout(DDAAlgorythm, 3, 0, 2, 0, {
+        Qt::AlignLeft,
+        Qt::AlignTop
+    });
+    mainLayout -> addLayout(paintingAreaLayout, 0, 0, Qt::AlignLeft);
+    mainLayout -> addLayout(infoAreaLayout, 0, 1, Qt::AlignLeft);
+    mainLayout -> addLayout(stepAlgorythm, 1, 1, { Qt::AlignLeft });
 
 
-//    infoAreaLayout->addLayout(stepAlgorythm, 1);
-//    infoAreaLayout->addLayout(DDAAlgorythm, 1);
+    mainLayout -> setColumnStretch(0, 1);
+    mainLayout -> setColumnStretch(1, 0);
 
+    mainLayout -> setContentsMargins(0, 0, 0, 0);
 
-    stepAlgorythm->addLayout(DDAAlgorythm, 3, 0, 2, 0 ,{Qt::AlignLeft, Qt::AlignTop});
-    mainLayout->addLayout(paintingAreaLayout,0, 0, Qt::AlignLeft);
-    mainLayout->addLayout(infoAreaLayout, 0, 1, Qt::AlignLeft);
-    mainLayout->addLayout(stepAlgorythm,1,1 , {Qt::AlignLeft});
-//    mainLayout->addLayout(DDAAlgorythm, 2,1 , {Qt::AlignLeft});
-
-
-
-    mainLayout->setColumnStretch(0, 1);
-    mainLayout->setColumnStretch(1, 0);
-//    mainLayout->setColumnStretch(2, 0);
-
-
-    mainLayout->setContentsMargins(0, 0, 0, 0);
-
-    mainLayout->setColumnMinimumWidth(0, 650);
-    mainLayout->setRowMinimumHeight(1,900);
-
-
-
-//    MainWindow::setLayout(infoAreaLayout);
-    centralWidget()->setLayout(mainLayout);
-
-
+    mainLayout -> setColumnMinimumWidth(0, 650);
+    mainLayout -> setRowMinimumHeight(1, 900);
+    centralWidget() -> setLayout(mainLayout);
 
     repaint();
 }
@@ -387,116 +352,77 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow() {
 
     delete ui;
-
 }
 
 void MainWindow::paintEvent(QPaintEvent * ) {
     QPainter painter(this);
 
 
-    // x: 550 = this->width() * 0.6875;
-
     painter.setPen(QPen(Qt::black, image.getPenWidth()));
-//    510 из 550 из 800 клеточки
     image.setPenWidth(3);
     painter.setPen(QPen(Qt::black, image.getPenWidth()));
-    painter.drawLine(this->width() * 0.6875, 0, this->width() * 0.6875, this->height());
-
-    painter.drawLine(this->width() * 0.34375, 5, this->width() * 0.34375, this->height());
-    painter.drawLine(this->width() * 0.34375,5,this->width() * 0.34375 + this->width() * 0.00625, 10);
-    painter.drawLine(this->width() * 0.34375, 5, this->width() * 0.34375 - this->width() * 0.00625, 10);
-//    painter.drawText(280, 10, QString("Y"));
-
-
-    painter.drawLine(0, this->height() / 2, this->width() * 0.6875, this->height() / 2);
-    painter.drawLine(this->width() * 0.6875, this->height() / 2, this->width() * 0.6875 - this->width() * 0.01, this->height() / 2 + this->height() / 90);
-    painter.drawLine(this->width() * 0.6875, this->height() / 2, this->width() * 0.6875 - this->width() * 0.01, this->height() / 2 - this->height() / 90);
-
-//    painter.drawText(535, 290, QString("X"));
-//    image.setPenWidth(1);
-
-
-
-    int cellSize = this->height()/40;
-//    int counter = -17;
-//    for (int i = this->width()/160 + cellSize; i < this->width() * 0.6875 - cellSize; i += cellSize) {
-//        painter.drawLine(i, this->height()/2 + this->height()/300, i, this->height()/2 - this->height()/300);
-//        image.setPenWidth(1);
-
-//        QFont font("Courier New");
-//        font.setStyleHint(QFont::Monospace);
-//        font.setPixelSize(this->height()/70);
-//        painter.setFont(font);
-//        if(counter < -11){
-//            painter.drawText(QRect(i , this->height()/2 + this->height()/300, i, this->height()/2 - this->height()/600), QString::number(counter));
-//        } else {
-//            painter.drawText(QRect(i + 3 , this->height()/2 + this->height()/300, i, this->height()/2 - this->height()/600), QString::number(counter));
-//        }
-
-
-//        painter.setPen(QPen(Qt::black, image.getPenWidth()));
-//        counter++;
-
-//        painter.drawLine(i, this->height()/60, i, this->height() - this->height()/60);
-//        image.setPenWidth(3);
-//        painter.setPen(QPen(Qt::black, image.getPenWidth()));
-//    }
-    int counter = 0;
-    image.setPenWidth(1);
     QFont font("Courier New");
     font.setStyleHint(QFont::Monospace);
-    font.setPixelSize(this->height()/70);
+    font.setPixelSize(this->height()/50);
+    painter.setFont(font);
+    painter.drawLine(this -> width() * 0.6875, 0, this -> width() * 0.6875, this -> height());
+
+    painter.drawLine(this -> width() * 0.34375, 5, this -> width() * 0.34375, this -> height());
+    painter.drawLine(this -> width() * 0.34375, 5, this -> width() * 0.34375 + this -> width() * 0.00625, 10);
+    painter.drawLine(this -> width() * 0.34375, 5, this -> width() * 0.34375 - this -> width() * 0.00625, 10);
+    painter.drawText(this -> width() * 0.355, this -> height()/ 60 + 3, QString("Y"));
+
+    painter.drawLine(0, this -> height() / 2, this -> width() * 0.6875, this -> height() / 2);
+    painter.drawLine(this -> width() * 0.6875, this -> height() / 2, this -> width() * 0.6875 - this -> width() * 0.01, this -> height() / 2 + this -> height() / 90);
+    painter.drawLine(this -> width() * 0.6875, this -> height() / 2, this -> width() * 0.6875 - this -> width() * 0.01, this -> height() / 2 - this -> height() / 90);
+    painter.drawText(this -> width() * 0.676, this -> height() * 0.48333333, QString("X"));
+
+    int cellSize = this -> height() / 40;
+    int counter = 0;
+    image.setPenWidth(1);
+    font.setStyleHint(QFont::Monospace);
+    font.setPixelSize(this -> height() / 70);
     painter.setFont(font);
 
     painter.setPen(QPen(Qt::black, image.getPenWidth()));
-    for (int i = this->width() * 0.34375 ; i > this->width()/160 ; i -= cellSize) {
+    for (int i = this -> width() * 0.34375; i > this -> width() / 160; i -= cellSize) {
 
-        if(counter < -11){
-            painter.drawText(QRect(i , this->height()/2 + this->height()/300, i, this->height()/2 - this->height()/600), QString::number(counter));
+        if (counter < -11) {
+            painter.drawText(QRect(i, this -> height() / 2 + this -> height() / 300, i, this -> height() / 2 - this -> height() / 600), QString::number(counter));
         } else {
-            painter.drawText(QRect(i + 3 , this->height()/2 + this->height()/300, i, this->height()/2 - this->height()/600), QString::number(counter));
+            painter.drawText(QRect(i + 3, this -> height() / 2 + this -> height() / 300, i, this -> height() / 2 - this -> height() / 600), QString::number(counter));
         }
-        painter.drawLine(i, this->height()/2 + this->height()/300, i, this->height()/2 - this->height()/300);
+        painter.drawLine(i, this -> height() / 2 + this -> height() / 300, i, this -> height() / 2 - this -> height() / 300);
 
-        painter.drawLine(i, this->height()/30, i, this->height() - this->height()/30);
+        painter.drawLine(i, this -> height() / 30, i, this -> height() - this -> height() / 30);
         painter.setPen(QPen(Qt::black, image.getPenWidth()));
         counter--;
     }
     counter = 0;
-    for (int i = this->width() * 0.34375; i < this->width() * 0.6875 - cellSize; i += cellSize) {
-        if(counter < -11){
-            painter.drawText(QRect(i , this->height()/2 + this->height()/300, i, this->height()/2 - this->height()/600), QString::number(counter));
+    for (int i = this -> width() * 0.34375; i < this -> width() * 0.6875 - cellSize; i += cellSize) {
+        if (counter < -11) {
+            painter.drawText(QRect(i, this -> height() / 2 + this -> height() / 300, i, this -> height() / 2 - this -> height() / 600), QString::number(counter));
         } else {
-            painter.drawText(QRect(i + 3 , this->height()/2 + this->height()/300, i, this->height()/2 - this->height()/600), QString::number(counter));
+            painter.drawText(QRect(i + 3, this -> height() / 2 + this -> height() / 300, i, this -> height() / 2 - this -> height() / 600), QString::number(counter));
         }
-        painter.drawLine(i, this->height()/2 + this->height()/300, i, this->height()/2 - this->height()/300);
-        painter.drawLine(i, this->height()/30, i, this->height() - this->height()/30);
+        painter.drawLine(i, this -> height() / 2 + this -> height() / 300, i, this -> height() / 2 - this -> height() / 300);
+        painter.drawLine(i, this -> height() / 30, i, this -> height() - this -> height() / 30);
         painter.setPen(QPen(Qt::black, image.getPenWidth()));
         counter++;
     }
-     counter = 0;
-    for (int i = this->height() / 2; i > cellSize + this->height()/200; i -= cellSize) {
-//        painter.drawLine(273, i, 277, i);
-//        image.setPenWidth(1);
-//        painter.setPen(QPen(Qt::black, image.getPenWidth()));
-
-        painter.drawText(QRect(this->width() * 0.3475, i + 3, this->width() * 0.3475 - 1, i), QString::number(counter));
+    counter = 0;
+    for (int i = this -> height() / 2; i > cellSize + this -> height() / 200; i -= cellSize) {
+        painter.drawText(QRect(this -> width() * 0.3475, i + 3, this -> width() * 0.3475 - 1, i), QString::number(counter));
         counter++;
 
-        painter.drawLine(this->width() / 90, i, this->width() * 0.6875 - this->width() / 90, i);
+        painter.drawLine(this -> width() / 90, i, this -> width() * 0.6875 - this -> width() / 90, i);
     }
     counter = 1;
-    for (int i = this->height() / 2; i < this->height() -  this->height()/300 - cellSize; i += cellSize) {
-//        painter.awLine(273, i, 277, i);
-//        image.setPenWidth(1);
-//        painter.setPen(QPen(Qt::black, image.getPenWidth()));
-
-//        painter.drawText(QRect(278, i + 3, 277, i), QString::number(counter));
+    for (int i = this -> height() / 2; i < this -> height() - this -> height() / 300 - cellSize; i += cellSize) {
         counter--;
-        painter.drawText(QRect(this->width() * 0.3475, i + 3, this->width() * 0.3475 - 1, i), QString::number(counter));
+        painter.drawText(QRect(this -> width() * 0.3475, i + 3, this -> width() * 0.3475 - 1, i), QString::number(counter));
 
-        painter.drawLine(this->width() / 90, i, this->width() * 0.6875- this->width() / 90, i);
-
+        painter.drawLine(this -> width() / 90, i, this -> width() * 0.6875 - this -> width() / 90, i);
     }
     painter.setBrush(QBrush(Qt::black, Qt::BDiagPattern));
     image.setPenWidth(3);
@@ -504,8 +430,8 @@ void MainWindow::paintEvent(QPaintEvent * ) {
 
     if (image.currentLine == BRESENHAMCIRCLE) {
         int radius = image.radiusOfCircle;
-        int x0 = this->width() * 0.6875 / 2 + image.centerOfCircleX * cellSize;
-        int y0 = this->height() / 2 - image.centerOfCircleY * cellSize;
+        int x0 = this -> width() * 0.6875 / 2 + image.centerOfCircleX * cellSize;
+        int y0 = this -> height() / 2 - image.centerOfCircleY * cellSize;
         painter.setBrush(QBrush(Qt::black, Qt::BDiagPattern));
         int x = radius;
         int y = 0;
@@ -536,11 +462,11 @@ void MainWindow::paintEvent(QPaintEvent * ) {
 
     if (image.currentLine == BRESENHAMLINE) {
 
-//
-        int x1 = (this->width() * 0.6875 / 2 + image.bresenhamLineX1 * cellSize);
-        int y1 = (this->height() / 2 - image.bresenhamLineY1 * cellSize);
-        int x2 = (this->width() * 0.6875 / 2 + (image.bresenhamLineX2) * cellSize);
-        int y2 = (this->height() / 2 - (image.bresenhamLineY2) * cellSize);
+        //
+        int x1 = (this -> width() * 0.6875 / 2 + image.bresenhamLineX1 * cellSize);
+        int y1 = (this -> height() / 2 - image.bresenhamLineY1 * cellSize);
+        int x2 = (this -> width() * 0.6875 / 2 + (image.bresenhamLineX2) * cellSize);
+        int y2 = (this -> height() / 2 - (image.bresenhamLineY2) * cellSize);
         painter.setPen(QPen(Qt::red, image.getPenWidth()));
         painter.drawLine(x1, y1, x2, y2);
         painter.setBrush(QBrush(Qt::black, Qt::BDiagPattern));
@@ -551,68 +477,61 @@ void MainWindow::paintEvent(QPaintEvent * ) {
         const int signX = x1 < x2 ? cellSize : -cellSize;
         const int signY = y1 < y2 ? cellSize : -cellSize;
         int error = deltaX - deltaY;
-////        painter.drawPoint(x2,y2);
         painter.drawRect(x2, y2 - cellSize, cellSize, cellSize);
-        while(x1 != x2 || y1 != y2)
-       {
-////            painter.drawPoint(x1,y1);
-            painter.drawRect(x1 , y1 - cellSize, cellSize, cellSize);
+        while (x1 != x2 || y1 != y2) {
+            painter.drawRect(x1, y1 - cellSize, cellSize, cellSize);
             int error2 = error * 2;
-            if(error2 > -deltaY) {
+            if (error2 > -deltaY) {
                 error -= deltaY;
                 x1 += signX;
             }
-            if(error2 < deltaX) {
+            if (error2 < deltaX) {
                 error += deltaX;
                 y1 += signY;
             }
         }
-
-
     }
 
-    if(image.currentLine == STEPLINE){
-        int x1 = (this->width() * 0.6875 / 2 + (image.bresenhamLineX1 * cellSize));
-        int y1 = (this->height() / 2 - image.bresenhamLineY1 * cellSize);
-        int x2 = (this->width() * 0.6875 / 2 + (image.bresenhamLineX2 * cellSize));
-        int y2 = (this->height() / 2 - (image.bresenhamLineY2) * cellSize);
+    if (image.currentLine == STEPLINE) {
+        int x1 = (this -> width() * 0.6875 / 2 + (image.bresenhamLineX1 * cellSize));
+        int y1 = (this -> height() / 2 - image.bresenhamLineY1 * cellSize);
+        int x2 = (this -> width() * 0.6875 / 2 + (image.bresenhamLineX2 * cellSize));
+        int y2 = (this -> height() / 2 - (image.bresenhamLineY2) * cellSize);
         painter.setPen(QPen(Qt::red, image.getPenWidth()));
         painter.drawLine(x1, y1, x2, y2);
         painter.setBrush(QBrush(Qt::black, Qt::BDiagPattern));
         painter.setPen(QPen(Qt::black, image.getPenWidth()));
         if (x1 > x2) {
-                std::swap(x1, x2);
-                std::swap(y1, y2);
-            }
-            int dx = x2 - x1;
-            int dy = y2 - y1;
-            if (dx == 0 && dy == 0){
-                 painter.drawRect(x1, y1 - cellSize, cellSize, cellSize);
+            std::swap(x1, x2);
+            std::swap(y1, y2);
+        }
+        int dx = x2 - x1;
+        int dy = y2 - y1;
+        if (dx == 0 && dy == 0) {
+            painter.drawRect(x1, y1 - cellSize, cellSize, cellSize);
+        } else {
+            if (std::abs(dx) > std::abs(dy)) {
+                for (int x = x1; x <= x2; x += cellSize) {
+                    int temp = y1 + dy * (x - x1) / dx;
+                    painter.drawRect(x, ((temp - cellSize - 5) / cellSize) * cellSize, cellSize, cellSize);
+                }
             } else {
-                 if (std::abs(dx) > std::abs(dy)) {
-                     for(int x = x1; x <= x2; x+=cellSize) {
-                         int temp = y1 + dy * (x - x1) / dx;
-                         painter.drawRect(x, ((temp - cellSize - 5 ) / cellSize) * cellSize, cellSize, cellSize);
-                     }
-                 } else {
-                     if (y1 > y2) {
-                         std::swap(x1, x2);
-                         std::swap(y1, y2);
-                     }
-                     for (int y = y1; y <= y2; y+=cellSize) {
-                         int temp = dx / dy * (y - y1) + x1;
-                         painter.drawRect(temp, y - cellSize, cellSize, cellSize);
-                     }
-                 }
+                if (y1 > y2) {
+                    std::swap(x1, x2);
+                    std::swap(y1, y2);
+                }
+                for (int y = y1; y <= y2; y += cellSize) {
+                    int temp = dx / dy * (y - y1) + x1;
+                    painter.drawRect(temp, y - cellSize, cellSize, cellSize);
+                }
             }
+        }
     }
-    if(image.currentLine == DDALINE){
-//        std::cout << "HERE" << std::endl;
-
-        int x1 = (this->width() * 0.6875 / 2 + (image.ddaLineX1 * cellSize));
-        int y1 = (this->height() / 2 - image.ddaLineY1 * cellSize);
-        int x2 = (this->width() * 0.6875 / 2 + (image.ddaLineX2 * cellSize));
-        int y2 = (this->height() / 2 - (image.ddaLineY2) * cellSize);
+    if (image.currentLine == DDALINE) {
+        int x1 = (this -> width() * 0.6875 / 2 + (image.ddaLineX1 * cellSize));
+        int y1 = (this -> height() / 2 - image.ddaLineY1 * cellSize);
+        int x2 = (this -> width() * 0.6875 / 2 + (image.ddaLineX2 * cellSize));
+        int y2 = (this -> height() / 2 - (image.ddaLineY2) * cellSize);
 
         painter.setPen(QPen(Qt::red, image.getPenWidth()));
         painter.drawLine(x1, y1, x2, y2);
@@ -628,9 +547,9 @@ void MainWindow::paintEvent(QPaintEvent * ) {
         double dy = (y2 - y1);
         int step;
         if (abs(dx) >= abs(dy))
-          step = abs(dx);
+            step = abs(dx);
         else
-          step = abs(dy);
+            step = abs(dy);
 
         dx = dx / step;
         dy = dy / step;
@@ -639,33 +558,27 @@ void MainWindow::paintEvent(QPaintEvent * ) {
         int y = y1;
         int i = 0;
         while (i <= step) {
-            painter.drawRect(this->width() * 0.6875 / 2 + (x * cellSize), this->height() / 2 - y * cellSize, cellSize, -cellSize);
+            painter.drawRect(this -> width() * 0.6875 / 2 + (x * cellSize), this -> height() / 2 - y * cellSize, cellSize, -cellSize);
             x = x + dx;
             y = y + dy;
-            i+=1;
+            i += 1;
         }
-
     }
-painter.setPen(QPen(Qt::black, image.getPenWidth()));
-
+    painter.setPen(QPen(Qt::black, image.getPenWidth()));
 }
 
-void MainWindow::valueInLinesChanged(){
-//    image.currentLine = BRESENHAMLINE;
-    bresenhamLineButton->setChecked(1);
+void MainWindow::valueInLinesChanged() {
+    bresenhamLineButton -> setChecked(1);
     refreshImageLine();
 }
 
-void MainWindow::valueInCircleChanged(){
-//    image.currentLine = BRESENHAMCIRCLE;
-    bresenhamCircleButton->setChecked(1);
+void MainWindow::valueInCircleChanged() {
+    bresenhamCircleButton -> setChecked(1);
     refreshImageCircle();
 }
 
-void MainWindow::valueInStepChanged(){
-//    image.currentLine = BRESENHAMCIRCLE;
-
-    stepLineButton->setChecked(1);
+void MainWindow::valueInStepChanged() {
+    stepLineButton -> setChecked(1);
     refreshImageStepLine();
 }
 
@@ -688,7 +601,6 @@ void MainWindow::refreshImageLine() {
     int X2 = xOfSecondPointSpinBox -> value();
     int Y2 = yOfSecondPointSpinBox -> value();
 
-
     image.bresenhamLineX1 = X1;
     image.bresenhamLineY1 = Y1;
     image.bresenhamLineX2 = X2;
@@ -704,7 +616,6 @@ void MainWindow::refreshImageStepLine() {
     int X2 = x2StepSpinBox -> value();
     int Y2 = y2StepSpinBox -> value();
 
-
     image.bresenhamLineX1 = X1;
     image.bresenhamLineY1 = Y1;
     image.bresenhamLineX2 = X2;
@@ -712,31 +623,21 @@ void MainWindow::refreshImageStepLine() {
     repaint();
 }
 
-void MainWindow::resizeEvent(QResizeEvent * /*resizeEvent*/) {
-    int containerWidth = this->width();
-    int containerHeight = this->height();
+void MainWindow::resizeEvent(QResizeEvent * /*resizeEvent*/ ) {
+    int containerWidth = this -> width();
+    int containerHeight = this -> height();
 
-    int contentsHeight = containerHeight ;
+    int contentsHeight = containerHeight;
     int contentsWidth = containerHeight * 1.333333;
-    if (contentsWidth > containerWidth ) {
-        contentsWidth = containerWidth ;
+    if (contentsWidth > containerWidth) {
+        contentsWidth = containerWidth;
         contentsHeight = containerWidth / 1.33333;
     }
 
     MainWindow::resize(contentsWidth, contentsHeight);
-
-//    paintingAreaLayout -> setGeometry(QRect(0, 0, this->width() * 0.6875, this->height()));
-//    infoAreaLayout -> setGeometry(QRect(this->width() * 0.69375, 0, this->width() * 0.2875, 595));
-//    bresenhamCircleButtonLayout -> setGeometry(QRect(this->width() * 0.7, 20, this->width() * 0.3125, this->height() * 0.233333333));
-
-//    bresenhamLineLayout -> setGeometry(QRect(this->width() * 0.69375, this->height() * 0.2833333, 230, this->height() * 0.233333333));
-//    firstPointBresenhamLineLayout -> setGeometry(QRect(this->width() * 0.7, this->height() * 0.25833333, this->width() * 0.3125, this->height() * 0.233333333));
-//    secondPointBresenhamLineLayout -> setGeometry(QRect(this->width() * 0.7, this->height() * 0.3, this->width() * 0.3125, this->height() * 0.233333333));
 }
-void MainWindow::valueInDDAChanged(){
-//    image.currentLine = BRESENHAMCIRCLE;
-
-    DDALineButton->setChecked(1);
+void MainWindow::valueInDDAChanged() {
+    DDALineButton -> setChecked(1);
     refreshImageDDALine();
 }
 
@@ -748,16 +649,12 @@ void MainWindow::refreshImageDDALine() {
     int X2 = x2DDASpinBox -> value();
     int Y2 = y2DDASpinBox -> value();
 
-
     image.ddaLineY2 = Y2;
     image.ddaLineX2 = X2;
     image.ddaLineY1 = Y1;
     image.ddaLineX1 = X1;
     repaint();
-
 }
-
-
 
 void MainWindow::refresh() {
     if (bresenhamCircleButton -> isChecked()) {
@@ -773,4 +670,3 @@ void MainWindow::refresh() {
     }
     repaint();
 }
-
