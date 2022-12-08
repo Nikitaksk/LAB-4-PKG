@@ -12,6 +12,7 @@ enum Lines
     BRESENHAMCIRCLE,
     BRESENHAMLINE,
     STEPLINE,
+    DDALINE,
 };
 
 class Image {
@@ -34,6 +35,11 @@ public:
     int stepLineY1;
     int stepLineX2;
     int stepLineY2;
+
+    int ddaLineX1;
+    int ddaLineY1;
+    int ddaLineX2;
+    int ddaLineY2;
 
 
 

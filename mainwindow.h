@@ -46,6 +46,7 @@ private:
 
 
     QRadioButton* bresenhamLineButton;
+    QRadioButton * DDALineButton;
 
     QSpinBox *xOfFirstPointSpinBox;
     QSpinBox *yOfFirstPointSpinBox;
@@ -55,6 +56,11 @@ private:
     QSpinBox *y1StepSpinBox;
     QSpinBox *x2StepSpinBox;
     QSpinBox *y2StepSpinBox;
+
+    QSpinBox *x1DDASpinBox;
+    QSpinBox *x2DDASpinBox;
+    QSpinBox *y1DDASpinBox;
+    QSpinBox *y2DDASpinBox;
 
     QSpinBox *xOfSecondPointSpinBox;
     QSpinBox *yOfSecondPointSpinBox;
@@ -80,6 +86,9 @@ public slots:
     void valueInStepChanged();
     void valueInCircleChanged();
     void refreshImageStepLine();
+
+    void valueInDDAChanged();
+    void refreshImageDDALine();
 
 
 private:

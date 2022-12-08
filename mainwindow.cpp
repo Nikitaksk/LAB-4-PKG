@@ -276,12 +276,98 @@ MainWindow::MainWindow(QWidget * parent): QMainWindow(parent), ui(new Ui::MainWi
     stepAlgorythm->addWidget(y2StepSpinBox,2,3);
 
 
+
+
+    QGridLayout * DDAAlgorythm = new QGridLayout();
+    QLabel * xOfFirstPointLabelDDA = new QLabel(this);
+    xOfFirstPointLabelDDA -> setText("X1:");
+    xOfFirstPointLabelDDA -> setFixedWidth(25);
+    xOfFirstPointLabelDDA -> setFixedHeight(25);
+
+    QLabel * yOfFirstPointLabelDDA = new QLabel(this);
+    yOfFirstPointLabelDDA -> setText("Y1:");
+    yOfFirstPointLabelDDA -> setFixedWidth(25);
+    yOfFirstPointLabelDDA -> setFixedHeight(27);
+
+    QLabel * xOfSecondPointLabelDDA = new QLabel(this);
+    xOfSecondPointLabelDDA -> setText("X2:");
+    xOfSecondPointLabelDDA -> setFixedWidth(25);
+    xOfSecondPointLabelDDA -> setFixedHeight(25);
+
+    QLabel * yOfSecondPointLabelDDA = new QLabel(this);
+    yOfSecondPointLabelDDA -> setText("Y2:");
+    yOfSecondPointLabelDDA -> setFixedWidth(25);
+    yOfSecondPointLabelDDA -> setFixedHeight(27);
+
+
+    x1DDASpinBox = new QSpinBox(this);
+    x1DDASpinBox -> setMaximum(17);
+    x1DDASpinBox -> setMinimum(-15);
+    x1DDASpinBox -> setFixedWidth(86);
+    x1DDASpinBox -> setButtonSymbols(QAbstractSpinBox::NoButtons);
+    x1DDASpinBox -> setFixedHeight(25);
+    x1DDASpinBox -> setFixedWidth(70);
+    connect(x1DDASpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInDDAChanged()));
+
+
+    y1DDASpinBox = new QSpinBox(this);
+    y1DDASpinBox -> setMaximum(17);
+    y1DDASpinBox -> setMinimum(-15);
+    y1DDASpinBox -> setFixedWidth(86);
+    y1DDASpinBox -> setButtonSymbols(QAbstractSpinBox::NoButtons);
+    y1DDASpinBox -> setFixedHeight(25);
+    y1DDASpinBox -> setFixedWidth(70);
+    connect(y1DDASpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInDDAChanged()));
+
+    x2DDASpinBox = new QSpinBox(this);
+    x2DDASpinBox -> setMaximum(17);
+    x2DDASpinBox -> setMinimum(-15);
+    x2DDASpinBox -> setFixedWidth(86);
+    x2DDASpinBox -> setButtonSymbols(QAbstractSpinBox::NoButtons);
+    x2DDASpinBox -> setFixedHeight(25);
+    x2DDASpinBox -> setFixedWidth(70);
+    connect( x2DDASpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInDDAChanged()));
+
+
+    y2DDASpinBox = new QSpinBox(this);
+    y2DDASpinBox -> setMaximum(17);
+    y2DDASpinBox -> setMinimum(-15);
+    y2DDASpinBox -> setFixedWidth(86);
+    y2DDASpinBox -> setButtonSymbols(QAbstractSpinBox::NoButtons);
+    y2DDASpinBox -> setFixedHeight(25);
+    y2DDASpinBox -> setFixedWidth(70);
+    connect( y2DDASpinBox, SIGNAL(valueChanged(int)), this, SLOT(valueInDDAChanged()));
+
+    DDALineButton = new QRadioButton(QString("DDA"), this);
+    connect(DDALineButton, SIGNAL(clicked()), this, SLOT(refreshImageDDALine()));
+    DDAAlgorythm->addWidget(DDALineButton,0,0);
+    DDAAlgorythm->addWidget(xOfFirstPointLabelDDA,1,0, Qt::AlignLeft);
+    DDAAlgorythm->addWidget(x1DDASpinBox,1,1, Qt::AlignLeft);
+    DDAAlgorythm->addWidget(yOfFirstPointLabelDDA,1,2);
+    DDAAlgorythm->addWidget(y1DDASpinBox,1,3);
+    DDAAlgorythm->setColumnMinimumWidth(0,10);
+    DDAAlgorythm->addWidget(xOfSecondPointLabelDDA,2,0, Qt::AlignLeft);
+    DDAAlgorythm->addWidget(x2DDASpinBox,2,1, Qt::AlignLeft);
+    DDAAlgorythm->addWidget(yOfSecondPointLabelDDA,2,2);
+    DDAAlgorythm->addWidget(y2DDASpinBox,2,3);
+
+
+//    infoAreaLayout->addLayout(stepAlgorythm, 1);
+//    infoAreaLayout->addLayout(DDAAlgorythm, 1);
+
+
+    stepAlgorythm->addLayout(DDAAlgorythm, 3, 0, 2, 0 ,{Qt::AlignLeft, Qt::AlignTop});
     mainLayout->addLayout(paintingAreaLayout,0, 0, Qt::AlignLeft);
     mainLayout->addLayout(infoAreaLayout, 0, 1, Qt::AlignLeft);
-    mainLayout->addLayout(stepAlgorythm,1,1 , {Qt::AlignLeft, Qt::AlignTop});
+    mainLayout->addLayout(stepAlgorythm,1,1 , {Qt::AlignLeft});
+//    mainLayout->addLayout(DDAAlgorythm, 2,1 , {Qt::AlignLeft});
+
+
+
     mainLayout->setColumnStretch(0, 1);
     mainLayout->setColumnStretch(1, 0);
-    mainLayout->setColumnStretch(2, 0);
+//    mainLayout->setColumnStretch(2, 0);
+
 
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -450,18 +536,20 @@ void MainWindow::paintEvent(QPaintEvent * ) {
 
     if (image.currentLine == BRESENHAMLINE) {
 
-//        painter.setPen(QPen(Qt::red, image.getPenWidth()));
-
+//
         int x1 = (this->width() * 0.6875 / 2 + image.bresenhamLineX1 * cellSize);
         int y1 = (this->height() / 2 - image.bresenhamLineY1 * cellSize);
-
         int x2 = (this->width() * 0.6875 / 2 + (image.bresenhamLineX2) * cellSize);
         int y2 = (this->height() / 2 - (image.bresenhamLineY2) * cellSize);
+        painter.setPen(QPen(Qt::red, image.getPenWidth()));
+        painter.drawLine(x1, y1, x2, y2);
+        painter.setBrush(QBrush(Qt::black, Qt::BDiagPattern));
+        painter.setPen(QPen(Qt::black, image.getPenWidth()));
 
         const int deltaX = abs(x2 - x1);
         const int deltaY = abs(y2 - y1);
-        const int signX = x1 < x2 ? 15 : -15;
-        const int signY = y1 < y2 ? 15 : -15;
+        const int signX = x1 < x2 ? cellSize : -cellSize;
+        const int signY = y1 < y2 ? cellSize : -cellSize;
         int error = deltaX - deltaY;
 ////        painter.drawPoint(x2,y2);
         painter.drawRect(x2, y2 - cellSize, cellSize, cellSize);
@@ -470,66 +558,92 @@ void MainWindow::paintEvent(QPaintEvent * ) {
 ////            painter.drawPoint(x1,y1);
             painter.drawRect(x1 , y1 - cellSize, cellSize, cellSize);
             int error2 = error * 2;
-            if(error2 > -deltaY)
-            {
+            if(error2 > -deltaY) {
                 error -= deltaY;
                 x1 += signX;
             }
-            if(error2 < deltaX)
-            {
+            if(error2 < deltaX) {
                 error += deltaX;
                 y1 += signY;
             }
         }
 
+
     }
+
     if(image.currentLine == STEPLINE){
         int x1 = (this->width() * 0.6875 / 2 + (image.bresenhamLineX1 * cellSize));
-
-
         int y1 = (this->height() / 2 - image.bresenhamLineY1 * cellSize);
-
         int x2 = (this->width() * 0.6875 / 2 + (image.bresenhamLineX2 * cellSize));
         int y2 = (this->height() / 2 - (image.bresenhamLineY2) * cellSize);
-
-
-
-        if (x1 > x2)
-            {
+        painter.setPen(QPen(Qt::red, image.getPenWidth()));
+        painter.drawLine(x1, y1, x2, y2);
+        painter.setBrush(QBrush(Qt::black, Qt::BDiagPattern));
+        painter.setPen(QPen(Qt::black, image.getPenWidth()));
+        if (x1 > x2) {
                 std::swap(x1, x2);
                 std::swap(y1, y2);
             }
             int dx = x2 - x1;
-
             int dy = y2 - y1;
-            if (dx == 0 && dy == 0)
-            {
+            if (dx == 0 && dy == 0){
                  painter.drawRect(x1, y1 - cellSize, cellSize, cellSize);
-            }
-            else
-            {
+            } else {
                  if (std::abs(dx) > std::abs(dy)) {
                      for(int x = x1; x <= x2; x+=cellSize) {
                          int temp = y1 + dy * (x - x1) / dx;
                          painter.drawRect(x, ((temp - cellSize - 5 ) / cellSize) * cellSize, cellSize, cellSize);
                      }
-                 }
-                 else
-                 {
-                     if (y1 > y2)
-                     {
+                 } else {
+                     if (y1 > y2) {
                          std::swap(x1, x2);
                          std::swap(y1, y2);
                      }
-
-                     for (int y = y1; y <= y2; y+=cellSize)
-                     {
+                     for (int y = y1; y <= y2; y+=cellSize) {
                          int temp = dx / dy * (y - y1) + x1;
                          painter.drawRect(temp, y - cellSize, cellSize, cellSize);
                      }
                  }
             }
+    }
+    if(image.currentLine == DDALINE){
+//        std::cout << "HERE" << std::endl;
 
+        int x1 = (this->width() * 0.6875 / 2 + (image.ddaLineX1 * cellSize));
+        int y1 = (this->height() / 2 - image.ddaLineY1 * cellSize);
+        int x2 = (this->width() * 0.6875 / 2 + (image.ddaLineX2 * cellSize));
+        int y2 = (this->height() / 2 - (image.ddaLineY2) * cellSize);
+
+        painter.setPen(QPen(Qt::red, image.getPenWidth()));
+        painter.drawLine(x1, y1, x2, y2);
+        painter.setBrush(QBrush(Qt::black, Qt::BDiagPattern));
+        painter.setPen(QPen(Qt::black, image.getPenWidth()));
+
+        x1 = (image.ddaLineX1);
+        y1 = (image.ddaLineY1);
+        x2 = (image.ddaLineX2);
+        y2 = (image.ddaLineY2);
+
+        double dx = (x2 - x1);
+        double dy = (y2 - y1);
+        int step;
+        if (abs(dx) >= abs(dy))
+          step = abs(dx);
+        else
+          step = abs(dy);
+
+        dx = dx / step;
+        dy = dy / step;
+
+        int x = x1;
+        int y = y1;
+        int i = 0;
+        while (i <= step) {
+            painter.drawRect(this->width() * 0.6875 / 2 + (x * cellSize), this->height() / 2 - y * cellSize, cellSize, -cellSize);
+            x = x + dx;
+            y = y + dy;
+            i+=1;
+        }
 
     }
 painter.setPen(QPen(Qt::black, image.getPenWidth()));
@@ -618,6 +732,29 @@ void MainWindow::resizeEvent(QResizeEvent * /*resizeEvent*/) {
 //    bresenhamLineLayout -> setGeometry(QRect(this->width() * 0.69375, this->height() * 0.2833333, 230, this->height() * 0.233333333));
 //    firstPointBresenhamLineLayout -> setGeometry(QRect(this->width() * 0.7, this->height() * 0.25833333, this->width() * 0.3125, this->height() * 0.233333333));
 //    secondPointBresenhamLineLayout -> setGeometry(QRect(this->width() * 0.7, this->height() * 0.3, this->width() * 0.3125, this->height() * 0.233333333));
+}
+void MainWindow::valueInDDAChanged(){
+//    image.currentLine = BRESENHAMCIRCLE;
+
+    DDALineButton->setChecked(1);
+    refreshImageDDALine();
+}
+
+void MainWindow::refreshImageDDALine() {
+    image.currentLine = DDALINE;
+
+    int X1 = x1DDASpinBox -> value();
+    int Y1 = y1DDASpinBox -> value();
+    int X2 = x2DDASpinBox -> value();
+    int Y2 = y2DDASpinBox -> value();
+
+
+    image.ddaLineY2 = Y2;
+    image.ddaLineX2 = X2;
+    image.ddaLineY1 = Y1;
+    image.ddaLineX1 = X1;
+    repaint();
+
 }
 
 
